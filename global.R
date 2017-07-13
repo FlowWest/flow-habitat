@@ -3,6 +3,7 @@ library(tidyverse)
 library(scales)
 library(plotly)
 library(forcats)
+library(shinycssloaders)
 
 flowz <- read_csv('data/flow_temperature.csv') %>% 
   filter(watershed == "Upper Sacramento River")
