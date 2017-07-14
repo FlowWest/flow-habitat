@@ -6,7 +6,7 @@ shinyServer(function(input, output) {
       add_lines(y = rep(90, 90), x = seq(21000, 31000, length = 90), inherit = FALSE, fill = 'tozeroy',
                 line = list(color = 'rgba(189,189,189, 0.1)'), hoverinfo = 'none', name = 'floodplain activated') %>% 
       layout(annotations = list(x = 26000, y = 70, xref = "x", yref = "y", showarrow = FALSE, ax = 0, ay = 0,
-                                text = 'additional 650 acres of <br>of-channel habitat available'),
+                                text = 'additional 650 acres of <br>floodplain habitat available'),
              yaxis = list(title = 'available habitat (acres)'),
              xaxis = list(title = 'flow (cfs)')) %>% 
       config(displayModeBar = FALSE)
