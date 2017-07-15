@@ -5,36 +5,34 @@ flow_habitatUI <- function(id) {
   tagList(
     fluidRow(
       column(width = 12,
-             selectInput(inputId = ns('shed'), label = 'select section', 
-                         choices = c('upsac', 'midsac', 'lowsac'), selected = 'upsac'))),
-    fluidRow(
-      column(width = 12,
-             tags$h4('Flow and Habitat Relationship'),
+             tags$h5('Flow and Habitat Relationship'),
              withSpinner(plotlyOutput(ns('area')), color = '#666666', type = 8))),
     fluidRow(
       column(width = 10,
-             tags$h4('1922-2003 Cal Lite Simulated flows'),
+             tags$h5('1922-2003 Cal Lite Simulated flows'),
              withSpinner(plotlyOutput(ns('flow')), color = '#666666', type = 8),
-             tags$h6('dashed gold line denotes floodplain threshold (21,000 cfs)')))
+             uiOutput(ns('fp_thresh_text'))))
   )
   
 }
 
-flow_habitat <- function(input, output, session) {
+flow_habitat <- function(input, output, session, river_section) {
+  
+  output$fp_thresh_text <- renderUI({
+    tags$h6(paste0('dashed gold line denotes floodplain threshold (', pretty_num(fp_hab()$threshold, 0), ' cfs)'))
+  })
   
   shed_flow <- reactive({
-    req(input$shed)
-    filter(sim_flow, shed == input$shed)
+    filter(sim_flow, shed == river_section)
   })
   
   shed_hab <- reactive({
-    req(input$shed)
-    filter(habitat, location == input$shed)
+    filter(habitat, location == river_section)
   })
   
   fp_hab <- reactive({
     fp_lookup %>% 
-      filter(location == input$shed)
+      filter(location == river_section)
   })
   
   output$area <- renderPlotly({

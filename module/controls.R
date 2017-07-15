@@ -1,3 +1,0 @@
-controlsUI <- function(id) {
-  
-}
